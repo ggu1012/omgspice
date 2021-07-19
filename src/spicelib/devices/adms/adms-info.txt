@@ -1,0 +1,8 @@
+
+to be expanded into directory src\spicelib\devices\adms
+
+ADMS devices are still experimental.
+
+There is a lack of suitable open spource device model parameter sets.
+
+The model BSIMCMG is not (yet) working correctly in transient simulation.
