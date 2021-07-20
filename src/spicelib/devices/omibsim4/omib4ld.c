@@ -30,6 +30,8 @@
 #include "ngspice/sperror.h"
 #include "ngspice/devdefs.h"
 #include "ngspice/suffix.h"
+#include "omi/omiDef.h"
+#include "omi/omiIft.h"
 
 #define MAX_EXPL 2.688117142e+43
 #define MIN_EXPL 3.720075976e-44
@@ -96,7 +98,12 @@ int omiBSIM4LoadOMP(omiBSIM4instance *here, CKTcircuit *ckt) {
 omiBSIM4model *model = omiBSIM4modPtr(here);
 #else
 omiBSIM4model *model = (omiBSIM4model*)inModel;
+
 omiBSIM4instance *here;
+
+omiCKT *omickt;
+omiIft *omiift;
+
 #endif
 double ceqgstot, dgstot_dvd, dgstot_dvg, dgstot_dvs, dgstot_dvb;
 double ceqgdtot, dgdtot_dvd, dgdtot_dvg, dgdtot_dvs, dgdtot_dvb;

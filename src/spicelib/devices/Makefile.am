@@ -3,7 +3,6 @@
 SUBDIRS = \
 	asrc	\
 	bjt	\
-	omibsim4 \
 	bsim1	\
 	bsim2	\
 	bsim3	\

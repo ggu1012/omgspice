@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = include/ngspice include/cppduals/duals misc maths frontend spicelib
-DIST_SUBDIRS = include/ngspice include/cppduals/duals misc maths frontend spicelib xspice ciderlib
+SUBDIRS = include/ngspice include/omi include/cppduals/duals misc maths frontend spicelib
+DIST_SUBDIRS = include/ngspice include/omi include/cppduals/duals misc maths frontend spicelib xspice ciderlib
 
 if XSPICE_WANTED
 SUBDIRS += xspice
