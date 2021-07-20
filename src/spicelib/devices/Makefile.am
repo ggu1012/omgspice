@@ -3,6 +3,7 @@
 SUBDIRS = \
 	asrc	\
 	bjt	\
+	omibsim4 \
 	bsim1	\
 	bsim2	\
 	bsim3	\
@@ -11,6 +12,7 @@ SUBDIRS = \
 	bsim4v5		\
 	bsim4v6		\
 	bsim4v7		\
+	omibsim4	\
 	bsim3v0		\
 	bsim3v1		\
 	bsim3v32	\
@@ -72,6 +74,7 @@ DIST_SUBDIRS = \
 	bsim4v5		\
 	bsim4v6		\
 	bsim4v7		\
+	omibsim4	\
 	bsim3v0		\
 	bsim3v1		\
 	bsim3v32	\

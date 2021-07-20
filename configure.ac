@@ -1264,6 +1264,7 @@ AC_CONFIG_FILES([Makefile
                  src/spicelib/devices/bsim4v5/Makefile
                  src/spicelib/devices/bsim4v6/Makefile
                  src/spicelib/devices/bsim4v7/Makefile
+                 src/spicelib/devices/omibsim4/Makefile
                  src/spicelib/devices/bsim3soi_pd/Makefile
                  src/spicelib/devices/bsim3soi_fd/Makefile
                  src/spicelib/devices/bsim3soi_dd/Makefile

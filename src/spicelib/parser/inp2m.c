@@ -124,6 +124,9 @@ INP2M(CKTcircuit *ckt, INPtables *tab, struct card *current)
         thismodel->INPmodType != INPtypelook("Mos6") &&
         thismodel->INPmodType != INPtypelook("Mos8") &&
         thismodel->INPmodType != INPtypelook("Mos9") &&
+
+        thismodel->INPmodType != INPtypelook("omiBSIM4") &&
+
         thismodel->INPmodType != INPtypelook("BSIM1") &&
         thismodel->INPmodType != INPtypelook("BSIM2") &&
         thismodel->INPmodType != INPtypelook("BSIM3") &&
@@ -136,6 +139,7 @@ INP2M(CKTcircuit *ckt, INPtables *tab, struct card *current)
         thismodel->INPmodType != INPtypelook("BSIM4v5") &&
         thismodel->INPmodType != INPtypelook("BSIM4v6") &&
         thismodel->INPmodType != INPtypelook("BSIM4v7") &&
+        thismodel->INPmodType != INPtypelook("omiBSIM4") &&
         thismodel->INPmodType != INPtypelook("BSIM3v0") &&
         thismodel->INPmodType != INPtypelook("BSIM3v1") &&
         thismodel->INPmodType != INPtypelook("SOI3") &&

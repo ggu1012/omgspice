@@ -55,6 +55,8 @@ Table of contents
  11.13 HiSIM2 - Hiroshima-University STARC IGFET Model
  11.14 HiSIM_HV - Hiroshima-University STARC IGFET High Voltage Model
  11.15 VDMOS - A simple PowerMOS transistor model derived from MOS1
+ 11.16 omiBSIM4 - BSIM model level 4 with open model interface
+
 12. SOI devices
  12.1 BSIM3SOI_FD - SOI model (fully depleted devices)
  12.2 BSIM3SOI_DD - SOI Model (dynamic depletion model)

@@ -97,6 +97,7 @@ extern struct coreInfo_t  coreInfo; /* cmexport.c */
 #include "bsim4v5/bsim4v5itf.h"
 #include "bsim4v6/bsim4v6itf.h"
 #include "bsim4v7/bsim4v7itf.h"
+#include "omibsim4/omibsim4itf.h"
 #include "bsim3soi_pd/b3soipditf.h"
 #include "bsim3soi_fd/b3soifditf.h"
 #include "bsim3soi_dd/b3soidditf.h"
@@ -173,6 +174,7 @@ static SPICEdev *(*static_devices[])(void) = {
     get_bsim4v5_info,
     get_bsim4v6_info,
     get_bsim4v7_info,
+    get_omibsim4_info,
     get_b3soipd_info,
     get_b3soifd_info,
     get_b3soidd_info,
@@ -313,12 +315,12 @@ SPICEdev ** devices(void)
 
 #ifdef ADMS
 #define DEVICES_USED {"asrc", "bjt", "vbic", "bsim1", "bsim2", "bsim3", "bsim3v32", "bsim3v2", "bsim3v1", "bsim4", "bsim4v5", "bsim4v6", "bsim4v7", \
-                      "bsim4soi", "bsim3soipd", "bsim3soifd", "bsim3soidd", "hisim2", "hisimhv1",  "hisimhv2", \
+                      "omibsim4", "bsim4soi", "bsim3soipd", "bsim3soifd", "bsim3soidd", "hisim2", "hisimhv1",  "hisimhv2", \
                       "cap", "cccs", "ccvs", "csw", "dio", "hfet", "hfet2", "ind", "isrc", "jfet", "ltra", "mes", "mesa" ,"mos1", "mos2", "mos3", \
                       "mos6", "mos9", "res", "soi3", "sw", "tra", "urc", "vccs", "vcvs", "vsrc", "hicum0", "bjt504t", "ekv", "psp102", "psp103", "bsimbulk", "bsimcmg"}
 #else
 #define DEVICES_USED {"asrc", "bjt", "vbic", "bsim1", "bsim2", "bsim3", "bsim3v32", "bsim3v2", "bsim3v1", "bsim4", "bsim4v5", "bsim4v6", "bsim4v7", \
-                      "bsim4soi", "bsim3soipd", "bsim3soifd", "bsim3soidd", "hisim2", "hisimhv1", "hisimhv2", \
+                      "omibsim4", "bsim4soi", "bsim3soipd", "bsim3soifd", "bsim3soidd", "hisim2", "hisimhv1", "hisimhv2", \
                       "cap", "cccs", "ccvs", "csw", "dio", "hfet", "hfet2", "ind", "isrc", "jfet", "ltra", "mes", "mesa" ,"mos1", "mos2", "mos3", \
                       "mos6", "mos9", "res", "soi3", "sw", "tra", "urc", "vccs", "vcvs", "vsrc"}
 #endif

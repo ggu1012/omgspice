@@ -334,6 +334,16 @@ char *INPdomodel(CKTcircuit *ckt, struct card *image, INPtables * tab)
 				    ("Device type BSIM5 not available in this binary\n");
 			    }
 			    break;
+
+			case 99:
+				type = INPtypelook("omiBSIM4");
+				if (type < 0) {
+				    err =
+				    INPmkTemp
+				    ("Device type omiBSIM4 not available in this binary\n");
+			    }
+			    break;
+
 #ifdef ADMS
 			case 16:
 			case 77:
