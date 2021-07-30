@@ -10,7 +10,7 @@
 SPICEdev omiBSIM4info = {
     .DEVpublic = {
         .name = "omiBSIM4",
-        .description = "Berkeley Short Channel IGFET Model-4",
+        .description = "BSIM4 with Open Model Interface",
         .terms = &omiBSIM4nSize,
         .numNames = &omiBSIM4nSize,
         .termNames = omiBSIM4names,

@@ -7,6 +7,7 @@
  *  Description : OMI IFT and related structures
  */
 
+#include "omi/omiDef.h"
 
 #ifndef  OMIIFT_H
 #define  OMIIFT_H
@@ -14,7 +15,7 @@
 
 #define OMI_DEFAULT -1
 
-/* This macro gets workData offset of a field */
+/* This macro gets workData offset of a dfield */
 #define OMI_WORK_DATA_OFFSET(_type_, _field_) \
 (&((_type_ *) 0)->_field_ - (double *) 0)
 

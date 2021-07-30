@@ -248,6 +248,8 @@ int ByPass, ChargeComputationNeeded, error, Check, Check1, Check2;
 
 double m;
 
+int omimod = 1; // hardcoded. should be moved to frontend option flag.
+
 ScalingFactor = 1.0e-9;
 ChargeComputationNeeded =  
                  ((ckt->CKTmode & (MODEDCTRANCURVE | MODEAC | MODETRAN | MODEINITSMSIG)) ||

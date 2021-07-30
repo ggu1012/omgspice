@@ -25,6 +25,8 @@ libomibsim4_la_SOURCES =	\
 	omibsim4ext.h	\
 	omibsim4init.c	\
 	omibsim4init.h	\
+	omib4getmparam.c \
+	omib4getparam.c \
 	omibsim4itf.h
 
 

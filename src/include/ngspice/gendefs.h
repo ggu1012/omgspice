@@ -37,14 +37,16 @@ GENnode(struct GENinstance *inst) {
 
 /* per model data */
 
-struct GENmodel {       /* model structure for a resistor */
-    int GENmodType;             /* type index of this device type */
+struct GENmodel {       /* model structure for a resistor */    
     GENmodel *GENnextModel;     /* pointer to next possible model in
                                  * linked list */
     GENinstance *GENinstances;  /* pointer to list of instances that have this
                                  * model */
     IFuid GENmodName;           /* pointer to character string naming this model */
     struct wordlist *defaults;  /* default instance parameters */
+
+    int GENmodType;             /* type index of this device type */
+    
 };
 
 

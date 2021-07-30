@@ -27,3 +27,7 @@ extern int omiBSIM4trunc(GENmodel*,CKTcircuit*,double*);
 extern int omiBSIM4noise(int,int,GENmodel*,CKTcircuit*,Ndata*,double*);
 extern int omiBSIM4unsetup(GENmodel*,CKTcircuit*);
 extern int omiBSIM4soaCheck(CKTcircuit *, GENmodel *);
+
+
+extern double omiBSIM4GetmParam(GENmodel * , int);
+extern double omiBSIM4GetParam(GENinstance *, int);
