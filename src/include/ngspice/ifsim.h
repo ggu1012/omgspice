@@ -299,8 +299,8 @@ struct IFdevice {
 #endif
 
     int flags;          /* DEV_ */
+    int omiflag;        /* OMI */
 };
-
 
 /*
  * Structure: IFanalysis

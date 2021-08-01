@@ -3641,7 +3641,15 @@ GENmodel *inMod)
           mod->omiBSIM4typeGiven = TRUE;
         }
         break;
-      default:
+
+
+      /* OMI */
+      case B4_MOD_omimod:
+        mod->omimod = value->rValue;
+        mod->omimodGiven = TRUE;
+        break;
+
+            default:
         return (E_BADPARM);
     }
     return(OK);

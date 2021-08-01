@@ -6,15 +6,15 @@
 #include "omibsim4def.h"
 #include "omibsim4init.h"
 
-double omiBSIM4GetmParam(GENmodel *inMod, int id) {
-  omiBSIM4model *mod = (omiBSIM4model *)inMod;
+double
+omiBSIM4GetmParam(GENmodel* inMod, int id)
+{
+  omiBSIM4model* mod = (omiBSIM4model*)inMod;
   switch (id) {
     case omiBSIM4_MOD_MOBMOD:
-      return (mod->omiBSIM4mobModGiven ? (double)mod->omiBSIM4mobMod
-                                       : 1e199);
+      return (mod->omiBSIM4mobModGiven ? (double)mod->omiBSIM4mobMod : 1e199);
     case omiBSIM4_MOD_BINUNIT:
-      return (mod->omiBSIM4binUnitGiven ? (double)mod->omiBSIM4binUnit
-                                        : 1e199);
+      return (mod->omiBSIM4binUnitGiven ? (double)mod->omiBSIM4binUnit : 1e199);
     case omiBSIM4_MOD_PARAMCHK:
       return (mod->omiBSIM4paramChkGiven ? (double)mod->omiBSIM4paramChk
                                          : 1e199);
@@ -22,14 +22,11 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
       return (mod->omiBSIM4cvchargeModGiven ? (double)mod->omiBSIM4cvchargeMod
                                             : 1e199);
     case omiBSIM4_MOD_CAPMOD:
-      return (mod->omiBSIM4capModGiven ? (double)mod->omiBSIM4capMod
-                                       : 1e199);
+      return (mod->omiBSIM4capModGiven ? (double)mod->omiBSIM4capMod : 1e199);
     case omiBSIM4_MOD_DIOMOD:
-      return (mod->omiBSIM4dioModGiven ? (double)mod->omiBSIM4dioMod
-                                       : 1e199);
+      return (mod->omiBSIM4dioModGiven ? (double)mod->omiBSIM4dioMod : 1e199);
     case omiBSIM4_MOD_RDSMOD:
-      return (mod->omiBSIM4rdsModGiven ? (double)mod->omiBSIM4rdsMod
-                                       : 1e199);
+      return (mod->omiBSIM4rdsModGiven ? (double)mod->omiBSIM4rdsMod : 1e199);
     case omiBSIM4_MOD_TRNQSMOD:
       return (mod->omiBSIM4trnqsModGiven ? (double)mod->omiBSIM4trnqsMod
                                          : 1e199);
@@ -43,39 +40,29 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
       return (mod->omiBSIM4rgateModGiven ? (double)mod->omiBSIM4rgateMod
                                          : 1e199);
     case omiBSIM4_MOD_PERMOD:
-      return (mod->omiBSIM4perModGiven ? (double)mod->omiBSIM4perMod
-                                       : 1e199);
+      return (mod->omiBSIM4perModGiven ? (double)mod->omiBSIM4perMod : 1e199);
     case omiBSIM4_MOD_GEOMOD:
-      return (mod->omiBSIM4geoModGiven ? (double)mod->omiBSIM4geoMod
-                                       : 1e199);
+      return (mod->omiBSIM4geoModGiven ? (double)mod->omiBSIM4geoMod : 1e199);
     case omiBSIM4_MOD_RGEOMOD:
-      return (mod->omiBSIM4rgeoModGiven ? (double)mod->omiBSIM4rgeoMod
-                                        : 1e199);
+      return (mod->omiBSIM4rgeoModGiven ? (double)mod->omiBSIM4rgeoMod : 1e199);
     case omiBSIM4_MOD_FNOIMOD:
-      return (mod->omiBSIM4fnoiModGiven ? (double)mod->omiBSIM4fnoiMod
-                                        : 1e199);
+      return (mod->omiBSIM4fnoiModGiven ? (double)mod->omiBSIM4fnoiMod : 1e199);
     case omiBSIM4_MOD_TNOIMOD:
-      return (mod->omiBSIM4tnoiModGiven ? (double)mod->omiBSIM4tnoiMod
-                                        : 1e199);
+      return (mod->omiBSIM4tnoiModGiven ? (double)mod->omiBSIM4tnoiMod : 1e199);
     case omiBSIM4_MOD_MTRLMOD:
-      return (mod->omiBSIM4mtrlModGiven ? (double)mod->omiBSIM4mtrlMod
-                                        : 1e199);
+      return (mod->omiBSIM4mtrlModGiven ? (double)mod->omiBSIM4mtrlMod : 1e199);
     case omiBSIM4_MOD_MTRLCOMPATMOD:
       return (mod->omiBSIM4mtrlCompatModGiven
-                  ? (double)mod->omiBSIM4mtrlCompatMod
-                  : 1e199);
+                ? (double)mod->omiBSIM4mtrlCompatMod
+                : 1e199);
     case omiBSIM4_MOD_GIDLMOD: /* v4.7 New GIDL/GISL */
-      return (mod->omiBSIM4gidlModGiven ? (double)mod->omiBSIM4gidlMod
-                                        : 1e199);
+      return (mod->omiBSIM4gidlModGiven ? (double)mod->omiBSIM4gidlMod : 1e199);
     case omiBSIM4_MOD_IGCMOD:
-      return (mod->omiBSIM4igcModGiven ? (double)mod->omiBSIM4igcMod
-                                       : 1e199);
+      return (mod->omiBSIM4igcModGiven ? (double)mod->omiBSIM4igcMod : 1e199);
     case omiBSIM4_MOD_IGBMOD:
-      return (mod->omiBSIM4igbModGiven ? (double)mod->omiBSIM4igbMod
-                                       : 1e199);
+      return (mod->omiBSIM4igbModGiven ? (double)mod->omiBSIM4igbMod : 1e199);
     case omiBSIM4_MOD_TEMPMOD:
-      return (mod->omiBSIM4tempModGiven ? (double)mod->omiBSIM4tempMod
-                                        : 1e199);
+      return (mod->omiBSIM4tempModGiven ? (double)mod->omiBSIM4tempMod : 1e199);
 
     case omiBSIM4_MOD_VERSION:
       return (mod->omiBSIM4versionGiven ? 4.7 : 1e199);
@@ -462,8 +449,7 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
     case omiBSIM4_MOD_VFBSDOFF:
       return (mod->omiBSIM4vfbsdoffGiven ? mod->omiBSIM4vfbsdoff : 1e199);
     case omiBSIM4_MOD_TVFBSDOFF:
-      return (mod->omiBSIM4tvfbsdoffGiven ? mod->omiBSIM4tvfbsdoff
-                                          : 1e199);
+      return (mod->omiBSIM4tvfbsdoffGiven ? mod->omiBSIM4tvfbsdoff : 1e199);
     case omiBSIM4_MOD_LINTNOI:
       return (mod->omiBSIM4lintnoiGiven ? mod->omiBSIM4lintnoi : 1e199);
 
@@ -613,8 +599,7 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
     case omiBSIM4_MOD_TNJTSSWD:
       return (mod->omiBSIM4tnjtsswdGiven ? mod->omiBSIM4tnjtsswd : 1e199);
     case omiBSIM4_MOD_TNJTSSWGD:
-      return (mod->omiBSIM4tnjtsswgdGiven ? mod->omiBSIM4tnjtsswgd
-                                          : 1e199);
+      return (mod->omiBSIM4tnjtsswgdGiven ? mod->omiBSIM4tnjtsswgd : 1e199);
     case omiBSIM4_MOD_VTSS:
       return (mod->omiBSIM4vtssGiven ? mod->omiBSIM4vtss : 1e199);
     case omiBSIM4_MOD_VTSD:
@@ -887,8 +872,7 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
     case omiBSIM4_MOD_LTVOFF:
       return (mod->omiBSIM4ltvoffGiven ? mod->omiBSIM4ltvoff : 1e199);
     case omiBSIM4_MOD_LTNFACTOR: /* v4.7 temp dep of leakage current  */
-      return (mod->omiBSIM4ltnfactorGiven ? mod->omiBSIM4ltnfactor
-                                          : 1e199);
+      return (mod->omiBSIM4ltnfactorGiven ? mod->omiBSIM4ltnfactor : 1e199);
     case omiBSIM4_MOD_LTETA0: /* v4.7 temp dep of leakage current  */
       return (mod->omiBSIM4lteta0Given ? mod->omiBSIM4lteta0 : 1e199);
     case omiBSIM4_MOD_LTVOFFCV: /* v4.7 temp dep of leakage current  */
@@ -1042,11 +1026,9 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
     case omiBSIM4_MOD_LXN:
       return (mod->omiBSIM4lxnGiven ? mod->omiBSIM4lxn : 1e199);
     case omiBSIM4_MOD_LVFBSDOFF:
-      return (mod->omiBSIM4lvfbsdoffGiven ? mod->omiBSIM4lvfbsdoff
-                                          : 1e199);
+      return (mod->omiBSIM4lvfbsdoffGiven ? mod->omiBSIM4lvfbsdoff : 1e199);
     case omiBSIM4_MOD_LTVFBSDOFF:
-      return (mod->omiBSIM4ltvfbsdoffGiven ? mod->omiBSIM4ltvfbsdoff
-                                           : 1e199);
+      return (mod->omiBSIM4ltvfbsdoffGiven ? mod->omiBSIM4ltvfbsdoff : 1e199);
     case omiBSIM4_MOD_LEU:
       return (mod->omiBSIM4leuGiven ? mod->omiBSIM4leu : 1e199);
     case omiBSIM4_MOD_LUCS:
@@ -1198,8 +1180,7 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
     case omiBSIM4_MOD_WTVOFF:
       return (mod->omiBSIM4wtvoffGiven ? mod->omiBSIM4wtvoff : 1e199);
     case omiBSIM4_MOD_WTNFACTOR: /* v4.7 temp dep of leakage current  */
-      return (mod->omiBSIM4wtnfactorGiven ? mod->omiBSIM4wtnfactor
-                                          : 1e199);
+      return (mod->omiBSIM4wtnfactorGiven ? mod->omiBSIM4wtnfactor : 1e199);
     case omiBSIM4_MOD_WTETA0: /* v4.7 temp dep of leakage current  */
       return (mod->omiBSIM4wteta0Given ? mod->omiBSIM4wteta0 : 1e199);
     case omiBSIM4_MOD_WTVOFFCV: /* v4.7 temp dep of leakage current  */
@@ -1353,11 +1334,9 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
     case omiBSIM4_MOD_WXN:
       return (mod->omiBSIM4wxnGiven ? mod->omiBSIM4wxn : 1e199);
     case omiBSIM4_MOD_WVFBSDOFF:
-      return (mod->omiBSIM4wvfbsdoffGiven ? mod->omiBSIM4wvfbsdoff
-                                          : 1e199);
+      return (mod->omiBSIM4wvfbsdoffGiven ? mod->omiBSIM4wvfbsdoff : 1e199);
     case omiBSIM4_MOD_WTVFBSDOFF:
-      return (mod->omiBSIM4wtvfbsdoffGiven ? mod->omiBSIM4wtvfbsdoff
-                                           : 1e199);
+      return (mod->omiBSIM4wtvfbsdoffGiven ? mod->omiBSIM4wtvfbsdoff : 1e199);
     case omiBSIM4_MOD_WEU:
       return (mod->omiBSIM4weuGiven ? mod->omiBSIM4weu : 1e199);
     case omiBSIM4_MOD_WUCS:
@@ -1509,8 +1488,7 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
     case omiBSIM4_MOD_PTVOFF:
       return (mod->omiBSIM4ptvoffGiven ? mod->omiBSIM4ptvoff : 1e199);
     case omiBSIM4_MOD_PTNFACTOR: /* v4.7 temp dep of leakage current  */
-      return (mod->omiBSIM4ptnfactorGiven ? mod->omiBSIM4ptnfactor
-                                          : 1e199);
+      return (mod->omiBSIM4ptnfactorGiven ? mod->omiBSIM4ptnfactor : 1e199);
     case omiBSIM4_MOD_PTETA0: /* v4.7 temp dep of leakage current  */
       return (mod->omiBSIM4pteta0Given ? mod->omiBSIM4pteta0 : 1e199);
     case omiBSIM4_MOD_PTVOFFCV: /* v4.7 temp dep of leakage current  */
@@ -1664,11 +1642,9 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
     case omiBSIM4_MOD_PXN:
       return (mod->omiBSIM4pxnGiven ? mod->omiBSIM4pxn : 1e199);
     case omiBSIM4_MOD_PVFBSDOFF:
-      return (mod->omiBSIM4pvfbsdoffGiven ? mod->omiBSIM4pvfbsdoff
-                                          : 1e199);
+      return (mod->omiBSIM4pvfbsdoffGiven ? mod->omiBSIM4pvfbsdoff : 1e199);
     case omiBSIM4_MOD_PTVFBSDOFF:
-      return (mod->omiBSIM4ptvfbsdoffGiven ? mod->omiBSIM4ptvfbsdoff
-                                           : 1e199);
+      return (mod->omiBSIM4ptvfbsdoffGiven ? mod->omiBSIM4ptvfbsdoff : 1e199);
     case omiBSIM4_MOD_PEU:
       return (mod->omiBSIM4peuGiven ? mod->omiBSIM4peu : 1e199);
     case omiBSIM4_MOD_PUCS:
@@ -1715,109 +1691,109 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
                                                 : 1e199);
     case omiBSIM4_MOD_JSS:
       return (mod->omiBSIM4SjctSatCurDensityGiven
-                  ? mod->omiBSIM4SjctSatCurDensity
-                  : 1e199);
+                ? mod->omiBSIM4SjctSatCurDensity
+                : 1e199);
     case omiBSIM4_MOD_JSWS:
       return (mod->omiBSIM4SjctSidewallSatCurDensityGiven
-                  ? mod->omiBSIM4SjctSidewallSatCurDensity
-                  : 1e199);
+                ? mod->omiBSIM4SjctSidewallSatCurDensity
+                : 1e199);
     case omiBSIM4_MOD_JSWGS:
       return (mod->omiBSIM4SjctGateSidewallSatCurDensityGiven
-                  ? mod->omiBSIM4SjctGateSidewallSatCurDensity
-                  : 1e199);
+                ? mod->omiBSIM4SjctGateSidewallSatCurDensity
+                : 1e199);
     case omiBSIM4_MOD_PBS:
       return (mod->omiBSIM4SbulkJctPotentialGiven
-                  ? mod->omiBSIM4SbulkJctPotential
-                  : 1e199);
+                ? mod->omiBSIM4SbulkJctPotential
+                : 1e199);
     case omiBSIM4_MOD_MJS:
       return (mod->omiBSIM4SbulkJctBotGradingCoeffGiven
-                  ? mod->omiBSIM4SbulkJctBotGradingCoeff
-                  : 1e199);
+                ? mod->omiBSIM4SbulkJctBotGradingCoeff
+                : 1e199);
     case omiBSIM4_MOD_PBSWS:
       return (mod->omiBSIM4SsidewallJctPotentialGiven
-                  ? mod->omiBSIM4SsidewallJctPotential
-                  : 1e199);
+                ? mod->omiBSIM4SsidewallJctPotential
+                : 1e199);
     case omiBSIM4_MOD_MJSWS:
       return (mod->omiBSIM4SbulkJctSideGradingCoeffGiven
-                  ? mod->omiBSIM4SbulkJctSideGradingCoeff
-                  : 1e199);
+                ? mod->omiBSIM4SbulkJctSideGradingCoeff
+                : 1e199);
     case omiBSIM4_MOD_CJS:
       return (mod->omiBSIM4SunitAreaJctCapGiven ? mod->omiBSIM4SunitAreaJctCap
                                                 : 1e199);
     case omiBSIM4_MOD_CJSWS:
       return (mod->omiBSIM4SunitLengthSidewallJctCapGiven
-                  ? mod->omiBSIM4SunitLengthSidewallJctCap
-                  : 1e199);
+                ? mod->omiBSIM4SunitLengthSidewallJctCap
+                : 1e199);
     case omiBSIM4_MOD_NJS:
       return (mod->omiBSIM4SjctEmissionCoeffGiven
-                  ? mod->omiBSIM4SjctEmissionCoeff
-                  : 1e199);
+                ? mod->omiBSIM4SjctEmissionCoeff
+                : 1e199);
     case omiBSIM4_MOD_PBSWGS:
       return (mod->omiBSIM4SGatesidewallJctPotentialGiven
-                  ? mod->omiBSIM4SGatesidewallJctPotential
-                  : 1e199);
+                ? mod->omiBSIM4SGatesidewallJctPotential
+                : 1e199);
     case omiBSIM4_MOD_MJSWGS:
       return (mod->omiBSIM4SbulkJctGateSideGradingCoeffGiven
-                  ? mod->omiBSIM4SbulkJctGateSideGradingCoeff
-                  : 1e199);
+                ? mod->omiBSIM4SbulkJctGateSideGradingCoeff
+                : 1e199);
     case omiBSIM4_MOD_CJSWGS:
       return (mod->omiBSIM4SunitLengthGateSidewallJctCapGiven
-                  ? mod->omiBSIM4SunitLengthGateSidewallJctCap
-                  : 1e199);
+                ? mod->omiBSIM4SunitLengthGateSidewallJctCap
+                : 1e199);
     case omiBSIM4_MOD_XTIS:
       return (mod->omiBSIM4SjctTempExponentGiven ? mod->omiBSIM4SjctTempExponent
                                                  : 1e199);
     case omiBSIM4_MOD_JSD:
       return (mod->omiBSIM4DjctSatCurDensityGiven
-                  ? mod->omiBSIM4DjctSatCurDensity
-                  : 1e199);
+                ? mod->omiBSIM4DjctSatCurDensity
+                : 1e199);
     case omiBSIM4_MOD_JSWD:
       return (mod->omiBSIM4DjctSidewallSatCurDensityGiven
-                  ? mod->omiBSIM4DjctSidewallSatCurDensity
-                  : 1e199);
+                ? mod->omiBSIM4DjctSidewallSatCurDensity
+                : 1e199);
     case omiBSIM4_MOD_JSWGD:
       return (mod->omiBSIM4DjctGateSidewallSatCurDensityGiven
-                  ? mod->omiBSIM4DjctGateSidewallSatCurDensity
-                  : 1e199);
+                ? mod->omiBSIM4DjctGateSidewallSatCurDensity
+                : 1e199);
     case omiBSIM4_MOD_PBD:
       return (mod->omiBSIM4DbulkJctPotentialGiven
-                  ? mod->omiBSIM4DbulkJctPotential
-                  : 1e199);
+                ? mod->omiBSIM4DbulkJctPotential
+                : 1e199);
     case omiBSIM4_MOD_MJD:
       return (mod->omiBSIM4DbulkJctBotGradingCoeffGiven
-                  ? mod->omiBSIM4DbulkJctBotGradingCoeff
-                  : 1e199);
+                ? mod->omiBSIM4DbulkJctBotGradingCoeff
+                : 1e199);
     case omiBSIM4_MOD_PBSWD:
       return (mod->omiBSIM4DsidewallJctPotentialGiven
-                  ? mod->omiBSIM4DsidewallJctPotential
-                  : 1e199);
+                ? mod->omiBSIM4DsidewallJctPotential
+                : 1e199);
     case omiBSIM4_MOD_MJSWD:
       return (mod->omiBSIM4DbulkJctSideGradingCoeffGiven
-                  ? mod->omiBSIM4DbulkJctSideGradingCoeff
-                  : 1e199);
+                ? mod->omiBSIM4DbulkJctSideGradingCoeff
+                : 1e199);
     case omiBSIM4_MOD_CJD:
       return (mod->omiBSIM4DunitAreaJctCapGiven ? mod->omiBSIM4DunitAreaJctCap
                                                 : 1e199);
     case omiBSIM4_MOD_CJSWD:
       return (mod->omiBSIM4DunitLengthSidewallJctCapGiven
-                  ? mod->omiBSIM4DunitLengthSidewallJctCap
-                  : 1e199);
+                ? mod->omiBSIM4DunitLengthSidewallJctCap
+                : 1e199);
     case omiBSIM4_MOD_NJD:
       return (mod->omiBSIM4DjctEmissionCoeffGiven
-                  ? mod->omiBSIM4DjctEmissionCoeff
-                  : 1e199);
+                ? mod->omiBSIM4DjctEmissionCoeff
+                : 1e199);
     case omiBSIM4_MOD_PBSWGD:
       return (mod->omiBSIM4DGatesidewallJctPotentialGiven
-                  ? mod->omiBSIM4DGatesidewallJctPotential
-                  : 1e199);
+                ? mod->omiBSIM4DGatesidewallJctPotential
+                : 1e199);
     case omiBSIM4_MOD_MJSWGD:
       return (mod->omiBSIM4DbulkJctGateSideGradingCoeffGiven
-                  ? mod->omiBSIM4DbulkJctGateSideGradingCoeff
-                  : 1e199);
+                ? mod->omiBSIM4DbulkJctGateSideGradingCoeff
+                : 1e199);
     case omiBSIM4_MOD_CJSWGD:
       return (mod->omiBSIM4DunitLengthGateSidewallJctCapGiven
-                  ? mod->omiBSIM4DunitLengthGateSidewallJctCap
-                  : 1e199);
+                ? mod->omiBSIM4DunitLengthGateSidewallJctCap
+                : 1e199);
     case omiBSIM4_MOD_XTID:
       return (mod->omiBSIM4DjctTempExponentGiven ? mod->omiBSIM4DjctTempExponent
                                                  : 1e199);
@@ -1868,16 +1844,16 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
 
     case omiBSIM4_MOD_NOIA:
       return (mod->omiBSIM4oxideTrapDensityAGiven
-                  ? mod->omiBSIM4oxideTrapDensityA
-                  : 1e199);
+                ? mod->omiBSIM4oxideTrapDensityA
+                : 1e199);
     case omiBSIM4_MOD_NOIB:
       return (mod->omiBSIM4oxideTrapDensityBGiven
-                  ? mod->omiBSIM4oxideTrapDensityB
-                  : 1e199);
+                ? mod->omiBSIM4oxideTrapDensityB
+                : 1e199);
     case omiBSIM4_MOD_NOIC:
       return (mod->omiBSIM4oxideTrapDensityCGiven
-                  ? mod->omiBSIM4oxideTrapDensityC
-                  : 1e199);
+                ? mod->omiBSIM4oxideTrapDensityC
+                : 1e199);
     case omiBSIM4_MOD_EM:
       return (mod->omiBSIM4emGiven ? mod->omiBSIM4em : 1e199);
     case omiBSIM4_MOD_EF:
@@ -1915,6 +1891,28 @@ double omiBSIM4GetmParam(GENmodel *inMod, int id) {
 
     case omiBSIM4_MOD_PMOS:
       return (mod->omiBSIM4typeGiven ? (double)mod->omiBSIM4type : 1e199);
+
+    /* OMI */
+    case B4_MOD_omimod:
+      return (mod->omimodGiven ? mod->omimod : 1e199);
+    case B4_MOD_agemod:
+      return (mod->agemodGiven ? mod->agemod : 1e199);
+    case B4_MOD_fvth0_age:
+      return (mod->fvth0_ageGiven ? mod->fvth0_age : 1e199);
+    case B4_MOD_dagetime:
+      return (mod->dagetimeGiven ? mod->dagetime : 1e199);
+    case B4_MOD_n_age:
+      return (mod->n_ageGiven ? mod->n_age : 1e199);
+    case B4_MOD_Hs_age:
+      return (mod->Hs_ageGiven ? mod->Hs_age : 1e199);
+    case B4_MOD_ms_age:
+      return (mod->omimodGiven ? mod->ms_age : 1e199);
+    case B4_MOD_Hg_age:
+      return (mod->Hg_ageGiven ? mod->Hg_age : 1e199);
+    case B4_MOD_mg_age:
+      return (mod->mg_ageGiven ? mod->mg_age : 1e199);
+    case B4_MOD_Vgsdmax:
+      return (mod->VgsdmaxGiven ? mod->Vgsdmax : 1e199);
 
     default:
       return 1e199;

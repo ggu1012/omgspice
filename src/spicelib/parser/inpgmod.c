@@ -76,7 +76,7 @@ create_model(CKTcircuit *ckt, INPmodel *modtmp, INPtables *tab)
     int     error;
 
     /* not already defined, so create & give parameters */
-    error = ft_sim->newModel(ckt, modtmp->INPmodType, &(modtmp->INPmodfast), modtmp->INPmodName);
+    error = ft_sim->newModel(ckt, modtmp->INPmodType, &(modtmp->INPmodfast), modtmp->INPmodName); /* CKTmodCrt */
     if (error)
         return error;
 

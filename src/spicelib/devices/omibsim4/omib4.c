@@ -1047,6 +1047,19 @@ IOP("vbdr_max", omiBSIM4_MOD_VBDR_MAX, IF_REAL, "maximum voltage B-D branch"),
 
 IP( "nmos", omiBSIM4_MOD_NMOS,  IF_FLAG, "Flag to indicate NMOS"),
 IP( "pmos", omiBSIM4_MOD_PMOS,  IF_FLAG, "Flag to indicate PMOS"),
+
+/* OMI */
+IP("omimod", B4_MOD_omimod, IF_REAL, "OMI Feature: omimod"),
+IP("agemod", B4_MOD_agemod, IF_REAL, "OMI Feature: agemod"),
+IP("fvth0_age", B4_MOD_fvth0_age, IF_REAL, "OMI Feature: fvth0_age"),
+IP("dagetime", B4_MOD_dagetime, IF_REAL, "OMI Feature: dagetime"),
+IP("n_age", B4_MOD_n_age, IF_REAL, "OMI Feature: n_age"),
+IP("Hs_age", B4_MOD_Hs_age, IF_REAL, "OMI Feature: Hs_age"),
+IP("ms_age", B4_MOD_ms_age, IF_REAL, "OMI Feature: ms_age"),
+IP("Hg_age", B4_MOD_Hg_age, IF_REAL, "OMI Feature: Hg_age"),
+IP("mg_age", B4_MOD_mg_age, IF_REAL, "OMI Feature: mg_age"),
+IP("Vgsdmax", B4_MOD_Vgsdmax, IF_REAL, "OMI Feature: Vgsdmax"),
+
 };
 
 char *omiBSIM4names[] = {

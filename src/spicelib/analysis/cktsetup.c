@@ -3,16 +3,16 @@ Copyright 1990 Regents of the University of California.  All rights reserved.
 Author: 1985 Thomas L. Quarles
 **********/
 
-    /* CKTsetup(ckt)
-     * this is a driver program to iterate through all the various
-     * setup functions provided for the circuit elements in the
-     * given circuit
-     */
+/* CKTsetup(ckt)
+ * this is a driver program to iterate through all the various
+ * setup functions provided for the circuit elements in the
+ * given circuit
+ */
 
-#include "ngspice/ngspice.h"
-#include "ngspice/smpdefs.h"
 #include "ngspice/cktdefs.h"
 #include "ngspice/devdefs.h"
+#include "ngspice/ngspice.h"
+#include "ngspice/smpdefs.h"
 #include "ngspice/sperror.h"
 
 #ifdef XSPICE
@@ -20,53 +20,53 @@ Author: 1985 Thomas L. Quarles
 #endif
 
 #ifdef USE_OMP
-#include <omp.h>
 #include "ngspice/cpextern.h"
+#include <omp.h>
 int nthreads;
 #endif
 
-#define CKALLOC(var,size,type) \
-    if(size && ((var = TMALLOC(type, size)) == NULL)){\
-            return(E_NOMEM);\
-}
-
+#define CKALLOC(var, size, type)                                               \
+  if (size && ((var = TMALLOC(type, size)) == NULL)) {                         \
+    return (E_NOMEM);                                                          \
+  }
 
 int
-CKTsetup(CKTcircuit *ckt)
+CKTsetup(CKTcircuit* ckt)
 {
-    int i;
-    int error;
+  int i;
+  int error;
 #ifdef XSPICE
- /* gtri - begin - Setup for adding rshunt option resistors */
-    CKTnode *node;
-    int     num_nodes;
- /* gtri - end - Setup for adding rshunt option resistors */
+  /* gtri - begin - Setup for adding rshunt option resistors */
+  CKTnode* node;
+  int num_nodes;
+  /* gtri - end - Setup for adding rshunt option resistors */
 #endif
-    SMPmatrix *matrix;
-    ckt->CKTnumStates=0;
+  SMPmatrix* matrix;
+  ckt->CKTnumStates = 0;
 
 #ifdef WANT_SENSE2
-    if(ckt->CKTsenInfo){
-        error = CKTsenSetup(ckt);
-        if (error)
-            return(error);
-    }
+  if (ckt->CKTsenInfo) {
+    error = CKTsenSetup(ckt);
+    if (error)
+      return (error);
+  }
 #endif
 
-    if (ckt->CKTisSetup)
-        return E_NOCHANGE;
+  if (ckt->CKTisSetup)
+    return E_NOCHANGE;
 
-    error = NIinit(ckt);
-    if (error) return(error);
-    ckt->CKTisSetup = 1;
+  error = NIinit(ckt);
+  if (error)
+    return (error);
+  ckt->CKTisSetup = 1;
 
-    matrix = ckt->CKTmatrix;
+  matrix = ckt->CKTmatrix;
 
 #ifdef USE_OMP
-    if (!cp_getvar("num_threads", CP_NUM, &nthreads, 0))
-        nthreads = 2;
+  if (!cp_getvar("num_threads", CP_NUM, &nthreads, 0))
+    nthreads = 2;
 
-    omp_set_num_threads(nthreads);
+  omp_set_num_threads(nthreads);
 /*    if (nthreads == 1)
       printf("OpenMP: %d thread is requested in ngspice\n", nthreads);
     else
@@ -74,118 +74,158 @@ CKTsetup(CKTcircuit *ckt)
 #endif
 
 #ifdef HAS_PROGREP
-    SetAnalyse("Device Setup", 0);
+  SetAnalyse("Device Setup", 0);
 #endif
 
-    /* preserve CKTlastNode before invoking DEVsetup()
-     * so we can check for incomplete CKTdltNNum() invocations
-     * during DEVunsetup() causing an erronous circuit matrix
-     *   when reinvoking CKTsetup()
-     */
-    ckt->prev_CKTlastNode = ckt->CKTlastNode;
+  /* preserve CKTlastNode before invoking DEVsetup()
+   * so we can check for incomplete CKTdltNNum() invocations
+   * during DEVunsetup() causing an erronous circuit matrix
+   *   when reinvoking CKTsetup()
+   */
+  ckt->prev_CKTlastNode = ckt->CKTlastNode;
 
-    for (i=0;i<DEVmaxnum;i++) {
-        if ( DEVices[i] && DEVices[i]->DEVsetup && ckt->CKThead[i] ) {
-            error = DEVices[i]->DEVsetup (matrix, ckt->CKThead[i], ckt,
-                    &ckt->CKTnumStates);
-            if(error) return(error);
-        }
+  /************** omiCKT setup part ***************/
+
+  /* Memory allocation for OMI interface. */
+  ckt->mypCKT = malloc(sizeof(omiCKT));
+  omiCKT* mypCKT = ckt->mypCKT;
+
+  mypCKT->CKTtemp = ckt->CKTtemp;
+  mypCKT->CKTnomTemp = ckt->CKTnomTemp;
+  mypCKT->scale = 0;
+  mypCKT->scalm = 0;
+  mypCKT->spiceType = 2;
+  mypCKT->omiAge = 0; // hardcoded
+
+  /* Find OMI models and update tblSize */
+  int tblSize = 0;
+  int modType;
+  for (i = 0; i < DEVmaxnum; i++) {
+    if (DEVices[i] && DEVices[i]->DEVsetup && ckt->CKThead[i] &&
+        DEVices[i]->DEVpublic.omiflag) {
+      tblSize += ckt->CKTstat->STATdevNum[ckt->CKThead[i]->GENmodType].instNum;
     }
-    for(i=0;i<=MAX(2,ckt->CKTmaxOrder)+1;i++) { /* dctran needs 3 states as minimum */
-        CKALLOC(ckt->CKTstates[i],ckt->CKTnumStates,double);
+  }
+
+  mypCKT->tblSize = tblSize;
+  mypCKT->omiInput = NULL;  // hardcoded
+  mypCKT->omiOutput = NULL; // hardcoded
+  mypCKT->omiSave = 0;      // hardcoded
+  mypCKT->degFile = NULL;   // hardcoded
+  mypCKT->omiSort = NULL;   // hardcoded
+
+  /************************************************/
+
+  for (i = 0; i < DEVmaxnum; i++) {
+    if (DEVices[i] && DEVices[i]->DEVsetup && ckt->CKThead[i]) {
+      error =
+        DEVices[i]->DEVsetup(matrix, ckt->CKThead[i], ckt, &ckt->CKTnumStates);
+      if (error)
+        return (error);
     }
+  }
+  for (i = 0; i <= MAX(2, ckt->CKTmaxOrder) + 1;
+       i++) { /* dctran needs 3 states as minimum */
+    CKALLOC(ckt->CKTstates[i], ckt->CKTnumStates, double);
+  }
 #ifdef WANT_SENSE2
-    if(ckt->CKTsenInfo){
-        /* to allocate memory to sensitivity structures if
-         * it is not done before */
+  if (ckt->CKTsenInfo) {
+    /* to allocate memory to sensitivity structures if
+     * it is not done before */
 
-        error = NIsenReinit(ckt);
-        if(error) return(error);
-    }
+    error = NIsenReinit(ckt);
+    if (error)
+      return (error);
+  }
 #endif
-    if(ckt->CKTniState & NIUNINITIALIZED) {
-        error = NIreinit(ckt);
-        if(error) return(error);
-    }
+  if (ckt->CKTniState & NIUNINITIALIZED) {
+    error = NIreinit(ckt);
+    if (error)
+      return (error);
+  }
 #ifdef XSPICE
   /* gtri - begin - Setup for adding rshunt option resistors */
 
-    if(ckt->enh->rshunt_data.enabled) {
+  if (ckt->enh->rshunt_data.enabled) {
 
-        /* Count number of voltage nodes in circuit */
-        for(num_nodes = 0, node = ckt->CKTnodes; node; node = node->next)
-            if((node->type == SP_VOLTAGE) && (node->number != 0))
-                num_nodes++;
+    /* Count number of voltage nodes in circuit */
+    for (num_nodes = 0, node = ckt->CKTnodes; node; node = node->next)
+      if ((node->type == SP_VOLTAGE) && (node->number != 0))
+        num_nodes++;
 
-        /* Allocate space for the matrix diagonal data */
-        if(num_nodes > 0) {
-            ckt->enh->rshunt_data.diag =
-                 TMALLOC(double *, num_nodes);
-        }
-
-        /* Set the number of nodes in the rshunt data */
-        ckt->enh->rshunt_data.num_nodes = num_nodes;
-
-        /* Get/create matrix diagonal entry following what RESsetup does */
-        for(i = 0, node = ckt->CKTnodes; node; node = node->next) {
-            if((node->type == SP_VOLTAGE) && (node->number != 0)) {
-                ckt->enh->rshunt_data.diag[i] =
-                      SMPmakeElt(matrix,node->number,node->number);
-                i++;
-            }
-        }
-
+    /* Allocate space for the matrix diagonal data */
+    if (num_nodes > 0) {
+      ckt->enh->rshunt_data.diag = TMALLOC(double*, num_nodes);
     }
 
-    /* gtri - end - Setup for adding rshunt option resistors */
+    /* Set the number of nodes in the rshunt data */
+    ckt->enh->rshunt_data.num_nodes = num_nodes;
+
+    /* Get/create matrix diagonal entry following what RESsetup does */
+    for (i = 0, node = ckt->CKTnodes; node; node = node->next) {
+      if ((node->type == SP_VOLTAGE) && (node->number != 0)) {
+        ckt->enh->rshunt_data.diag[i] =
+          SMPmakeElt(matrix, node->number, node->number);
+        i++;
+      }
+    }
+  }
+
+  /* gtri - end - Setup for adding rshunt option resistors */
 #endif
-    return(OK);
+  return (OK);
 }
 
 int
-CKTunsetup(CKTcircuit *ckt)
+CKTunsetup(CKTcircuit* ckt)
 {
-    int i, error, e2;
-    CKTnode *node;
+  int i, error, e2;
+  CKTnode* node;
 
-    error = OK;
-    if (!ckt->CKTisSetup)
-        return OK;
-
-    for(i=0;i<=ckt->CKTmaxOrder+1;i++) {
-        tfree(ckt->CKTstates[i]);
-    }
-
-    /* added by HT 050802*/
-    for(node=ckt->CKTnodes;node;node=node->next){
-        if(node->icGiven || node->nsGiven) {
-            node->ptr=NULL;
-        }
-    }
-
-    for (i=0;i<DEVmaxnum;i++) {
-        if ( DEVices[i] && DEVices[i]->DEVunsetup && ckt->CKThead[i] ) {
-            e2 = DEVices[i]->DEVunsetup (ckt->CKThead[i], ckt);
-            if (!error && e2)
-                error = e2;
-        }
-    }
-
-    if (ckt->prev_CKTlastNode != ckt->CKTlastNode) {
-        fprintf(stderr, "Internal Error: incomplete CKTunsetup(), this will cause serious problems, please report this issue !\n");
-        controlled_exit(EXIT_FAILURE);
-    }
-    ckt->prev_CKTlastNode = NULL;
-
-    ckt->CKTisSetup = 0;
-    if(error) return(error);
-
-    NIdestroy(ckt);
-    /*
-    if (ckt->CKTmatrix)
-        SMPdestroy(ckt->CKTmatrix);
-    ckt->CKTmatrix = NULL;
-    */
-
+  error = OK;
+  if (!ckt->CKTisSetup)
     return OK;
+
+  /* OMI */
+  tfree(ckt->mypCKT);
+
+  for (i = 0; i <= ckt->CKTmaxOrder + 1; i++) {
+    tfree(ckt->CKTstates[i]);
+  }
+
+  /* added by HT 050802*/
+  for (node = ckt->CKTnodes; node; node = node->next) {
+    if (node->icGiven || node->nsGiven) {
+      node->ptr = NULL;
+    }
+  }
+
+  for (i = 0; i < DEVmaxnum; i++) {
+    if (DEVices[i] && DEVices[i]->DEVunsetup && ckt->CKThead[i]) {
+      e2 = DEVices[i]->DEVunsetup(ckt->CKThead[i], ckt);
+      if (!error && e2)
+        error = e2;
+    }
+  }
+
+  if (ckt->prev_CKTlastNode != ckt->CKTlastNode) {
+    fprintf(stderr,
+            "Internal Error: incomplete CKTunsetup(), this will cause serious "
+            "problems, please report this issue !\n");
+    controlled_exit(EXIT_FAILURE);
+  }
+  ckt->prev_CKTlastNode = NULL;
+
+  ckt->CKTisSetup = 0;
+  if (error)
+    return (error);
+
+  NIdestroy(ckt);
+  /*
+  if (ckt->CKTmatrix)
+      SMPdestroy(ckt->CKTmatrix);
+  ckt->CKTmatrix = NULL;
+  */
+
+  return OK;
 }

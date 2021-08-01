@@ -63,6 +63,9 @@ CKTdestroy(CKTcircuit *ckt)
                 DEVices[i]->DEVdestroy();
         }
 
+    /* OMI */
+    FREE(ckt->mypCKT);
+
     for(i=0;i<=ckt->CKTmaxOrder+1;i++){
         FREE(ckt->CKTstates[i]);
     }

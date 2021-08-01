@@ -64,11 +64,14 @@ omiBSIM4setup(SMPmatrix* matrix,
 
   /*********** OMI declare ****************/
   void* lib;
+
   /* omi : tmp values for initializing omi input*/
   int tmpIdx, tmpIdx2;
-  double tmpmparam;
+  double tmpmpar;
 
   int (*omiUpdate)(omiCKT*, omiModel*, omiInstance*) = NULL;
+  char* (*omiCreate)(int, int, int, void*) = NULL;
+
   /**************************************/
 
 #ifdef USE_OMP
@@ -85,40 +88,23 @@ omiBSIM4setup(SMPmatrix* matrix,
     }
   }
 
+  omiCKT* mypCKT = ckt->mypCKT;
+
   lib = dlopen("libOMImodel.so", RTLD_NOW);
   if (!lib) {
     printf("%s\n", dlerror());
-    return 1;
+    return error;
   }
 
   omiUpdate = dlsym(lib, "omiUpdate");
   if ((error = dlerror()) != NULL) {
-    return 1;
+    return error;
   }
 
-  /* Memory allocation for OMI interface. */
-  omiCKT* pckt = malloc(sizeof(omiCKT));
-  omiModel* pModel = malloc(sizeof(omiModel));
-  omiInstance* pInstance = malloc(sizeof(omiInstance));
-
-  /***** omiCKT setup part *****/
-  pckt->CKTtemp = ckt->CKTtemp;
-  pckt->CKTnomTemp = ckt->CKTnomTemp;
-  pckt->scale = 0;
-  pckt->scalm = 0;
-  pckt->spiceType = 2;
-  pckt->omiAge = 0; // hardcoded
-
-  omiBSIM4model* tmpModel = model;
-
-  for (tmpModel; tmpModel != NULL; tmpModel = omiBSIM4nextModel(tmpModel))
-    pckt->tblSize = ckt->CKTstat->STATdevNum[model->gen.GENmodType].instNum;
-  pckt->omiInput = NULL;  // hardcoded
-  pckt->omiOutput = NULL; // hardcoded
-  pckt->omiSave = 0;      // hardcoded
-  pckt->degFile = NULL;   // hardcoded
-  pckt->omiSort = NULL;   // hardcoded
-  /*******************************/
+  omiCreate = dlsym(lib, "omiCreate");
+  if ((error = dlerror()) != NULL) {
+    return error;
+  }
 
   /*  loop through all the omiBSIM4 device models */
   for (; model != NULL; model = omiBSIM4nextModel(
@@ -2210,31 +2196,32 @@ omiBSIM4setup(SMPmatrix* matrix,
     DMDGeff = model->omiBSIM4dmdg - model->omiBSIM4dmcgt;
 
     /****** omiModel setup part ******/
+    omiModel* mypModel = &model->mypModel;
 
-    pModel->id = OMI_MOS_BSIM4;
-    pModel->modelType = model->omiBSIM4type;
-    pModel->level = 14;
-    pModel->printModel = 1;
-    pModel->modelName = model->gen.GENmodName;
+    mypModel->id = OMI_MOS_BSIM4;
+    mypModel->modelType = model->omiBSIM4type;
+    mypModel->level = 14;
+    mypModel->printModel = 1;
+    mypModel->modelName = model->gen.GENmodName;
 
     /* First, malloc with maximum size. */
-    pModel->param = malloc(omiBSIM4mPTSize * sizeof(String));
-    pModel->value = malloc(omiBSIM4mPTSize * sizeof(double));
+    mypModel->param = malloc(omiBSIM4mPTSize * sizeof(String));
+    mypModel->value = malloc(omiBSIM4mPTSize * sizeof(double));
 
     tmpIdx2 = 0;
     for (tmpIdx = 0; tmpIdx < omiBSIM4mPTSize; tmpIdx++) {
-      if ((tmpmparam = omiBSIM4GetmParam(
-             (GENmodel*)model, omiBSIM4mPTable[tmpIdx].id)) != 1e199) {
-        pModel->param[tmpIdx2] = omiBSIM4mPTable[tmpIdx].keyword;
-        pModel->value[tmpIdx2] = tmpmparam;
+      if ((tmpmpar = omiBSIM4GetmParam((GENmodel*)model,
+                                       omiBSIM4mPTable[tmpIdx].id)) != 1e199) {
+        mypModel->param[tmpIdx2] = omiBSIM4mPTable[tmpIdx].keyword;
+        mypModel->value[tmpIdx2] = tmpmpar;
         tmpIdx2++;
       }
     }
 
     /* Shrink memory size as modelsize. */
-    pModel->modelSize = tmpIdx2;
-    pModel->param = realloc(pModel->param, tmpIdx2 * sizeof(String));
-    pModel->value = realloc(pModel->value, tmpIdx2 * sizeof(double));
+    mypModel->modelSize = tmpIdx2;
+    mypModel->param = realloc(mypModel->param, tmpIdx2 * sizeof(String));
+    mypModel->value = realloc(mypModel->value, tmpIdx2 * sizeof(double));
 
     /*********************************/
 
@@ -2362,35 +2349,51 @@ omiBSIM4setup(SMPmatrix* matrix,
         here->omiBSIM4scc = 0.0;
       if (!here->omiBSIM4scGiven)
         here->omiBSIM4sc = 0.0; /* m */
+
       /****** omiInstance setup part ******/
 
-      pInstance->printWarn = 1;
-      pInstance->instName = here->gen.GENname;
+      omiInstance* mypInstance = &here->mypInstance;
+
+      mypInstance->printWarn = 1;
+      mypInstance->instName = here->gen.GENname;
 
       /* malloc maximum size. */
-      pInstance->param = malloc(omiBSIM4pTSize * sizeof(String));
-      pInstance->value = malloc(omiBSIM4pTSize * sizeof(double));
+      mypInstance->param = malloc(omiBSIM4pTSize * sizeof(String));
+      mypInstance->value = malloc(omiBSIM4pTSize * sizeof(double));
 
       tmpIdx2 = 0;
 
       /* omiBSIM4pTable[0(l) ~ 35(rgeomod)] omibsim4def.h */
       for (tmpIdx = 0; tmpIdx < 36; ++tmpIdx) {
-        if ((tmpmparam = omiBSIM4GetParam(
-               (GENinstance*)here, omiBSIM4pTable[tmpIdx].id)) != 1e199) {
-          pInstance->param[tmpIdx2] = omiBSIM4pTable[tmpIdx].keyword;
-          pInstance->value[tmpIdx2] = tmpmparam;
+        if ((tmpmpar = omiBSIM4GetParam((GENinstance*)here,
+                                        omiBSIM4pTable[tmpIdx].id)) != 1e199) {
+          mypInstance->param[tmpIdx2] = omiBSIM4pTable[tmpIdx].keyword;
+          mypInstance->value[tmpIdx2] = tmpmpar;
           tmpIdx2++;
         }
       }
 
       /* Shrink memory size. */
-      pInstance->instSize = tmpIdx2;
-      pInstance->param = realloc(pInstance->param, tmpIdx2 * sizeof(String));
-      pInstance->value = realloc(pInstance->value, tmpIdx2 * sizeof(double));
+      mypInstance->instSize = tmpIdx2;
+      mypInstance->param = realloc(mypInstance->param, tmpIdx2 * sizeof(String));
+      mypInstance->value = realloc(mypInstance->value, tmpIdx2 * sizeof(double));
 
       /***********************************/
 
-      omiUpdate(pckt, pModel, pInstance);
+      /* omiUpdate */
+      if (error = omiUpdate(mypCKT, mypModel, mypInstance))
+        return error;
+
+      /* omiCreate */
+      if (!(here->myomiIft = (omiIft*)omiCreate(mypCKT->spiceType,
+                                          mypModel->id,
+                                          mypModel->level,
+                                          mypModel->pModelData)))
+        return error;
+
+      /* omiEvaluate(0) */
+
+
 
       /* Topology setting */
       /* process drain series resistance */
@@ -2748,7 +2751,16 @@ omiBSIM4unsetup(GENmodel* inModel, CKTcircuit* ckt)
           here->omiBSIM4dNodePrime != here->omiBSIM4dNode)
         CKTdltNNum(ckt, here->omiBSIM4dNodePrime);
       here->omiBSIM4dNodePrime = 0;
+
+      /* OMI */
+      omiInstance* mypInstance = &here->mypInstance;
+      tfree(here->myomiIft);
+      tfree(mypInstance->param);
+      tfree(mypInstance->value);
     }
+    omiModel* mypModel = &model->mypModel;
+    tfree(mypModel->param);
+    tfree(mypModel->value);
   }
 #endif
   return OK;

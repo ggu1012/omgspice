@@ -19,11 +19,16 @@
 int
 omiBSIM4mDelete(GENmodel *gen_model)
 {
-    omiBSIM4model *model = (omiBSIM4model *) gen_model;
+    omiBSIM4model *model = (omiBSIM4model *) gen_model;    
 
 #ifdef USE_OMP
     FREE(model->omiBSIM4InstanceArray);
 #endif
+
+    /* OMI */
+    omiModel* mypModel = &model->mypModel;
+    FREE(mypModel->param);
+    FREE(mypModel->value);
 
     struct bsim4SizeDependParam *p = model->pSizeDependParamKnot;
     while (p) {

@@ -45,8 +45,7 @@ struct GENmodel {       /* model structure for a resistor */
     IFuid GENmodName;           /* pointer to character string naming this model */
     struct wordlist *defaults;  /* default instance parameters */
 
-    int GENmodType;             /* type index of this device type */
-    
+    int GENmodType;             /* type index of this device type */    
 };
 
 

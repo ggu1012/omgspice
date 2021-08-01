@@ -19,6 +19,7 @@ SPICEdev omiBSIM4info = {
         .numModelParms = &omiBSIM4mPTSize,
         .modelParms = omiBSIM4mPTable,
         .flags = DEV_DEFAULT,
+        .omiflag = 1, /* Is this model OMI-driven ? 1 : 0 */
 
 #ifdef XSPICE
         .cm_func = NULL,
@@ -44,7 +45,7 @@ SPICEdev omiBSIM4info = {
     .DEVaccept = NULL,
     .DEVdestroy = NULL,
     .DEVmodDelete = omiBSIM4mDelete,
-    .DEVdelete = NULL,
+    .DEVdelete = omiBSIM4delete,
     .DEVsetic = omiBSIM4getic,
     .DEVask = omiBSIM4ask,
     .DEVmodAsk = omiBSIM4mAsk,

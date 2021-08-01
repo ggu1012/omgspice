@@ -27,7 +27,8 @@ libomibsim4_la_SOURCES =	\
 	omibsim4init.h	\
 	omib4getmparam.c \
 	omib4getparam.c \
-	omibsim4itf.h
+	omibsim4itf.h \
+	omib4del.c
 
 
 
